@@ -1,0 +1,101 @@
+{
+  "name": "Daily Random Fact Email",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtMinute": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cf8b553c-68ca-4676-8694-7a80fe7ae0a4",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://uselessfacts.jsph.pl/random.json?language=en",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "98298f58-10e1-413d-9b41-df2c4a039f90",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "sendTo": "qualityassurance502@gmail.com",
+        "subject": "Daily Random Fact",
+        "message": "={{ $json.text }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "6163c6b0-da9b-423d-a60c-3da0745cb8ef",
+      "name": "Send a message",
+      "webhookId": "4491306a-d052-43ba-8eb7-8d42389d0a05",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IFrGgl3vubXpnnEm",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6e671a74-65c0-4e0d-91e2-7a7971477ca5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7fb9c15a60f56efb2ed4242be9731d3ca6085debc8b55380dea54cf9f42b047d"
+  },
+  "id": "V25qgYgcuGNZhE0w",
+  "tags": []
+}
